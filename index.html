@@ -63,7 +63,7 @@
         app.controller("appcontroller", function ($scope, $http) {
             $scope.hello = 'hello world'
             console.log('hello world')
-            $http.get("items.json")
+            $http.get("assets-file/items.json")
                 .then(function (response) {
                     $scope.result = response.data
                     console.log(response.data)
