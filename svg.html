@@ -90,7 +90,7 @@
             }
 
             $scope.copyToClipboard = async function (src) {
-                const url = 'assets-file/assets/' + src.item
+                const url = 'assets-file/svg/' + src.item
                 const image = await writeToCanvas(url)
                 console.log(image)
                 try {
