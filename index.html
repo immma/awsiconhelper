@@ -80,8 +80,7 @@
                 try {
                     await navigator.clipboard.write([
                         new ClipboardItem({
-                            // '[blob.type]': blob,
-                            'image/png': blob,
+                            '[blob.type]': blob,
                         })
                     ])
                     console.log('success')
