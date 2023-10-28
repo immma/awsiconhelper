@@ -94,13 +94,12 @@
 
             $scope.copyToClipboard = async function (src) {
                 const url = 'assets-file/assets/'+src.item
-                const data = await writeToCanvas(url)
+                const image = await writeToCanvas(url)
                 console.log(data)
-                const blob = await data.blob
                 try {
                     await navigator.clipboard.write([
                         new ClipboardItem({
-                            'image/png': fetch('assets-file/assets/' + src.item).then(response => response.blob)
+                            [image.type]: image
                         })
                     ])
                     console.log('success')
