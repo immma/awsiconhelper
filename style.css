@@ -20,3 +20,8 @@ h2 {
 .table> :not(caption)>*>* {
     color: azure;
 }
+
+.img-svg {
+    width: 300px;
+    height: auto;
+}
