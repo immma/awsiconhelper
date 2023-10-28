@@ -1,0 +1,22 @@
+body {
+    background: #232329;
+}
+
+p {
+    color: azure;
+}
+
+h3,
+h2 {
+    color: azure;
+}
+
+.table-hover tbody tr:hover td,
+.table-hover tbody tr:hover th {
+    background: #18181d;
+    color: white;
+}
+
+.table> :not(caption)>*>* {
+    color: azure;
+}
