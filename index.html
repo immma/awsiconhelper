@@ -43,7 +43,7 @@
                         <th>AWS icons</th>
                         <th>File name</th>
                         <!-- FUTURE FEATURE -->
-                        <!-- <th>Actions</th> -->
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,8 +51,8 @@
                         <td><img id="img" ng-src="assets-file/assets/{{ val.item }}" alt="" srcset=""></td>
                         <td>{{ val.item }}</td>
                         <!-- FUTURE FEATURE -->
-                        <!-- <td><Button ng-click="copyToClipboard(val)" type="button" class="btn btn-dark"></i>Copy to
-                                clipboard</Button></td> -->
+                        <td><Button ng-click="copyToClipboard(val)" type="button" class="btn btn-dark"></i>Copy to
+                                clipboard</Button></td>
                     </tr>
                 </tbody>
             </table>
@@ -73,47 +73,47 @@
                     console.error(params)
                 })
 
-            // $scope.copyToClipboard = async function (src) {
-            //     try {
-            //         const data = await fetch('assets-file/assets/' + src.item)
-            //         console.log(data)
-            //         const blob = await data.blob
-            //         await navigator.clipboard.write([
-            //             new ClipboardItem({
-            //                 [blob.type]: blob,
-            //             })
-            //         ])
-            //         console.log('success')
-            //     } catch (error) {
-            //         console.log(e)
-            //     }
+            $scope.copyToClipboard = async function (src) {
+                try {
+                    const data = await fetch('assets-file/assets/' + src.item)
+                    console.log(data)
+                    const blob = await data.blob
+                    await navigator.clipboard.write([
+                        new ClipboardItem({
+                            [blob.type]: blob,
+                        })
+                    ])
+                    console.log('success')
+                } catch (error) {
+                    console.log(e)
+                }
+            }
+
+            // $scope.copyToClipboard = function () {
+            //     copyfromimage(document.querySelector('#imgcp'))
             // }
 
-            $scope.copyToClipboard = function () {
-                copyfromimage(document.querySelector('#imgcp'))
-            }
+            // function copyfromimage(src) {
+            //     const img = document.createElement("img");
+            //     img.src = 'assets/Arch_Alexa-For-Business_64.png'
+            //     // document.body.appendChild(imgcopy);
+            //     // try {
+            //     //     console.log(imgcopy.src)
+            //     //     document.execCommand('copy');
+            //     // } catch (err) {
+            //     //     console.error('Unable to copy to clipboard', err);
+            //     // }
+            //     // document.body.removeChild(imgcopy);
 
-            function copyfromimage(src) {
-                const img = document.createElement("img");
-                img.src = 'assets/Arch_Alexa-For-Business_64.png'
-                // document.body.appendChild(imgcopy);
-                // try {
-                //     console.log(imgcopy.src)
-                //     document.execCommand('copy');
-                // } catch (err) {
-                //     console.error('Unable to copy to clipboard', err);
-                // }
-                // document.body.removeChild(imgcopy);
-
-                document.body.appendChild(img);
-                var r = document.createRange();
-                r.setStartBefore(img);
-                r.setEndAfter(img);
-                r.selectNode(img);
-                var sel = window.getSelection();
-                sel.addRange(r);
-                document.execCommand('copy');
-            }
+            //     document.body.appendChild(img);
+            //     var r = document.createRange();
+            //     r.setStartBefore(img);
+            //     r.setEndAfter(img);
+            //     r.selectNode(img);
+            //     var sel = window.getSelection();
+            //     sel.addRange(r);
+            //     document.execCommand('copy');
+            // }
         })
 
 
