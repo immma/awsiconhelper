@@ -59,6 +59,10 @@
         </div>
     </div>
     <script>
+        const img = new Image();
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
         var app = angular.module("app", []);
 
         app.controller("appcontroller", function ($scope, $http) {
@@ -73,14 +77,30 @@
                     console.error(params)
                 })
 
+
+            function writeToCanvas(src) {
+                return new Promise((res, rej) => {
+                    img.src = src;
+                    img.onload = function () {
+                        canvas.width = img.naturalWidth;
+                        canvas.height = img.naturalHeight;
+                        ctx.drawImage(img, 0, 0)
+                        canvas.toBlob((blob) => {
+                            res(blob);
+                        }, 'image/png');
+                    }
+                });
+            }
+
             $scope.copyToClipboard = async function (src) {
-                const data = await fetch('assets-file/assets/' + src.item)
+                const url = 'assets-file/assets/'+src.item
+                const data = await write(url)
                 console.log(data)
                 const blob = await data.blob
                 try {
                     await navigator.clipboard.write([
                         new ClipboardItem({
-                            'image/png': fetch('assets-file/assets/'+src.item).then(response => response.blob)
+                            'image/png': fetch('assets-file/assets/' + src.item).then(response => response.blob)
                         })
                     ])
                     console.log('success')
