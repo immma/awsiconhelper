@@ -74,7 +74,7 @@
                 })
 
             $scope.copyToClipboard = async function (src) {
-                const data = await fetch('assets-file/assets/' + src.item)
+                const data = await fetch('/assets-file/assets/' + src.item)
                 console.log(data)
                 const blob = await data.blob
                 try {
