@@ -47,7 +47,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="val in result | filter:search | limitTo: 50">
-                        <td><img id="img" ng-src="assets-file/svg/{{ val.item }}" alt="" srcset=""></td>
+                        <td><img id="img" class="img-thumbnail" ng-src="assets-file/svg/{{ val.item }}" alt="" srcset=""></td>
                         <td>{{ val.item }}</td>
                         <!-- FUTURE FEATURE -->
                         <td><Button ng-click="copyToClipboard(val)" type="button" class="btn btn-dark"></i>Copy to
@@ -79,8 +79,8 @@
                 return new Promise((res, rej) => {
                     img.src = src;
                     img.onload = function () {
-                        canvas.width = 1024;
-                        canvas.height = 1024;
+                        canvas.width = img.naturalWidth;
+                        canvas.height = img.naturalHeight;
                         ctx.drawImage(img, 0, 0)
                         canvas.toBlob((blob) => {
                             res(blob);
