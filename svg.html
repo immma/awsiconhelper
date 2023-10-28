@@ -58,6 +58,9 @@
         </div>
     </div>
     <script>
+        const img = new Image();
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
         var app = angular.module("app", []);
 
         app.controller("appcontroller", function ($scope, $http) {
@@ -72,46 +75,34 @@
                     console.error(params)
                 })
 
-            // $scope.copyToClipboard = async function (src) {
-            //     try {
-            //         const data = await fetch('assets-file/assets/' + src.item)
-            //         console.log(data)
-            //         const blob = await data.blob
-            //         await navigator.clipboard.write([
-            //             new ClipboardItem({
-            //                 [blob.type]: blob,
-            //             })
-            //         ])
-            //         console.log('success')
-            //     } catch (error) {
-            //         console.log(e)
-            //     }
-            // }
-
-            $scope.copyToClipboard = function () {
-                copyfromimage(document.querySelector('#imgcp'))
+            function writeToCanvas(src) {
+                return new Promise((res, rej) => {
+                    img.src = src;
+                    img.onload = function () {
+                        canvas.width = img.naturalWidth;
+                        canvas.height = img.naturalHeight;
+                        ctx.drawImage(img, 0, 0)
+                        canvas.toBlob((blob) => {
+                            res(blob);
+                        }, 'image/png');
+                    }
+                });
             }
 
-            function copyfromimage(src) {
-                const img = document.createElement("img");
-                img.src = 'assets/Arch_Alexa-For-Business_64.png'
-                // document.body.appendChild(imgcopy);
-                // try {
-                //     console.log(imgcopy.src)
-                //     document.execCommand('copy');
-                // } catch (err) {
-                //     console.error('Unable to copy to clipboard', err);
-                // }
-                // document.body.removeChild(imgcopy);
-
-                document.body.appendChild(img);
-                var r = document.createRange();
-                r.setStartBefore(img);
-                r.setEndAfter(img);
-                r.selectNode(img);
-                var sel = window.getSelection();
-                sel.addRange(r);
-                document.execCommand('copy');
+            $scope.copyToClipboard = async function (src) {
+                const url = 'assets-file/assets/' + src.item
+                const image = await writeToCanvas(url)
+                console.log(image)
+                try {
+                    await navigator.clipboard.write([
+                        new ClipboardItem({
+                            [image.type]: image
+                        })
+                    ])
+                    console.log('success')
+                } catch (error) {
+                    console.log(error)
+                }
             }
         })
 
