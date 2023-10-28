@@ -80,7 +80,7 @@
                 try {
                     await navigator.clipboard.write([
                         new ClipboardItem({
-                            [blob.type]: blob,
+                            'image/png': fetch('assets-file/assets/'+src.item).then(response => response.blob)
                         })
                     ])
                     console.log('success')
